@@ -21,10 +21,12 @@ angular.module('categories', [
   .controller('CategoriesCtrl', function CategoriesCtrl($scope, categories) {
     $scope.getCurrentCategoryName = categories.getCurrentCategoryName;
 
-    categories.getCategories()
+    /*categories.getCategories()
       .then(function (result) {
         $scope.categories = result;
-      });
+      });*/
+      
+    $scope.categories = categories.getCategories();
 
     $scope.isCurrentCategory = function (category) {
       return category.name === $scope.getCurrentCategoryName();

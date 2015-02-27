@@ -1,5 +1,5 @@
 angular.module("firebaseFactory",['firebase'])
-.constant('FIREBASE_URI','')
+.constant('FIREBASE_URI','https://eggly-zti.firebaseio.com/')
 .factory('FirebaseOperations',function($firebase,FIREBASE_URI){
     var ref = new Firebase(FIREBASE_URI);
     var refCategories = ref.child('categories');
@@ -33,14 +33,16 @@ angular.module("firebaseFactory",['firebase'])
         bookmarks.$remove(bookmark);
     }
     
-    //FIX THIS
-    
     var updateCategory = function(category){
-        categories.$save(category);
+        var c = categories.$getRecord(category.$id);
+        c = category;
+        categories.$save(c);
     }
     
     var updateBookmark = function(bookmark){
-        bookmarks.$save(bookmark)
+        var b = bookmarks.$getRecord(bookmark.$id);
+        b = bookmark;
+        bookmarks.$save(b);
     }
     
     

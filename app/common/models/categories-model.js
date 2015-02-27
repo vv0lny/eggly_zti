@@ -1,11 +1,8 @@
 angular.module('eggly.models.categories', [
-  
+  'firebaseFactory'
 ])
-  .service('categories', function CategoriesService($http, $q) {
-    var URLS = {
-        FETCH: 'data/categories.json'
-      },
-      categories,
+  .service('categories', function CategoriesService($http, $q, FirebaseOperations) {
+    var categories,
       currentCategory,
       categoriesModel = this;
 
@@ -19,7 +16,7 @@ angular.module('eggly.models.categories', [
     }
 
     categoriesModel.getCategories = function () {
-      return (categories) ? $q.when(categories) : $http.get(URLS.FETCH).then(cacheCategories);
+      return (categories) ? $q.when(categories) : FirebaseOperations.getCategories();
     };
 
     categoriesModel.getCurrentCategory = function () {

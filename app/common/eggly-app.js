@@ -2,7 +2,8 @@ angular.module('Eggly', [
   'ui.router',
   'categories',
   'bookmarks',
-  'firebase'
+  'firebase',
+  'firebaseFactory'
 ])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
