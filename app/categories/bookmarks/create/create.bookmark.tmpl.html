@@ -8,6 +8,10 @@
             <label for="newBookmarkURL">Bookmark URL</label>
             <input type="text" class="form-control" id="newBookmarkURL" ng-model="newBookmark.url" placeholder="Enter URL">
         </div>
+        <div class="form-group">
+            <label for="newBookmarkDesctiption">Bookmark Description</label>
+            <input type="text" class="form-control" id="newBookmarkDesctiption" ng-model="newBookmark.description" placeholder="Enter description">
+        </div>
         <button type="submit" class="btn btn-info btn-lg">Create</button>
         <button type="button" class="btn btn-default btn-lg pull-right" ng-click="cancelCreating()">Cancel</button>
     </form>

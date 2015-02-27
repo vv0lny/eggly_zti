@@ -1,11 +1,8 @@
 angular.module('eggly.models.bookmarks', [
-
+  'firebaseFactory'
 ])
-  .service('bookmarks', function BookmarksService($http, $q) {
-    var URLS = {
-        FETCH: 'data/bookmarks.json'
-      },
-      bookmarks,
+  .service('bookmarks', function BookmarksService($q, FirebaseOperations) {
+    var bookmarks,
       bookmarksModel = this;
 
     function extract(result) {
@@ -18,7 +15,8 @@ angular.module('eggly.models.bookmarks', [
     }
 
     bookmarksModel.getBookmarks = function () {
-      return (bookmarks) ? $q.when(bookmarks) : $http.get(URLS.FETCH).then(cacheBookmarks);
+      bookmarks = FirebaseOperations.getBookmarks()
+      return bookmarks;
     };
 
     function findBookmark(bookmarkId) {
@@ -41,20 +39,19 @@ angular.module('eggly.models.bookmarks', [
 
     bookmarksModel.createBookmark = function (bookmark) {
       bookmark.id = bookmarks.length;
-      bookmarks.push(bookmark);
+      FirebaseOperations.addBookmark(bookmark);
     };
 
     bookmarksModel.updateBookmark = function (bookmark) {
       var index = _.findIndex(bookmarks, function (b) {
-        return b.id == bookmark.id
+        return b.id == bookmark.id;
       });
       bookmarks[index] = bookmark;
+      FirebaseOperations.updateBookmark(bookmark);
     };
 
     bookmarksModel.deleteBookmark = function (bookmark) {
-      _.remove(bookmarks, function (b) {
-        return b.id == bookmark.id;
-      });
+      FirebaseOperations.removeBookmark(bookmark);
     };
 
     bookmarksModel.getBookmarksForCategory = function (category) {

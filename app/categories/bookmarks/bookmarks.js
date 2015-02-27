@@ -19,17 +19,14 @@ angular.module('bookmarks', [
   })
   .controller('BookmarksCtrl', function BookmarksCtrl($scope, $stateParams, bookmarks, categories) {
     categories.setCurrentCategory();
-
+    
     if ($stateParams.category) {
       categories.getCategoryByName($stateParams.category).then(function (category) {
         categories.setCurrentCategory(category);
       })
     }
 
-    bookmarks.getBookmarks()
-      .then(function (result) {
-        $scope.bookmarks = result;
-      });
+    $scope.bookmarks = bookmarks.getBookmarks();
 
     $scope.getCurrentCategory = categories.getCurrentCategory;
     $scope.getCurrentCategoryName = categories.getCurrentCategoryName;
