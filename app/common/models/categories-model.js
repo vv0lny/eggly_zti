@@ -1,22 +1,14 @@
 angular.module('eggly.models.categories', [
   'firebaseFactory'
 ])
-  .service('categories', function CategoriesService($http, $q, FirebaseOperations) {
+  .service('categories', function CategoriesService($q,FirebaseOperations) {
     var categories,
       currentCategory,
       categoriesModel = this;
 
-    function extract(result) {
-      return result.data;
-    }
-
-    function cacheCategories(result) {
-      categories = extract(result);
-      return categories;
-    }
-
     categoriesModel.getCategories = function () {
-      return (categories) ? $q.when(categories) : FirebaseOperations.getCategories();
+      categories = FirebaseOperations.getCategories();
+      return categories;
     };
 
     categoriesModel.getCurrentCategory = function () {
@@ -33,14 +25,12 @@ angular.module('eggly.models.categories', [
     };
 
     categoriesModel.createCategory = function (category) {
-      category.id = categories.length;
-      categories.push(category);
+      category.id = new Date();
+      FirebaseOperations.addCategory(category);
     };
 
     categoriesModel.deleteCategory = function (category) {
-      _.remove(categories, function (c) {
-        return c.id == category.id;
-      });
+      FirebaseOperations.removeCategory(category);
     };
 
     categoriesModel.getCategoryByName = function (categoryName) {

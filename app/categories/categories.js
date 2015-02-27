@@ -20,11 +20,6 @@ angular.module('categories', [
 
   .controller('CategoriesCtrl', function CategoriesCtrl($scope, categories) {
     $scope.getCurrentCategoryName = categories.getCurrentCategoryName;
-
-    /*categories.getCategories()
-      .then(function (result) {
-        $scope.categories = result;
-      });*/
       
     $scope.categories = categories.getCategories();
 
